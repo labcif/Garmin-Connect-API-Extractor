@@ -39,6 +39,7 @@ endpoints = {
     "activity_details": "/activity-service/activity/",
     "stress": "/usersummary-service/stats/stress/daily/",
     "steps": "/mobile-gateway/snapshot/timeline/v2/forDate/",
+    "daily": "/mobile-gateway/snapshot/timeline/v2/forDate/",
 }
 
 parser = argparse.ArgumentParser(description='Extract data from the Garmin Connect API')
@@ -172,7 +173,7 @@ headers = {
     'Authorization': 'Bearer ' + bearer_token,
 }
 
-if api == "heart_rate" or api == "steps":
+if api == "heart_rate" or api == "steps" or api == "daily":
     # Loop through the dates and get the data for each date
     for date in dates:
         print(Bcolors.OKBLUE + "[INFO] Getting the " + api + " data for the date " + date)
