@@ -2,11 +2,11 @@
 
 # Author: Fabian Nunes
 # Date: 2023-02-24
-# Version: 1.0
+# Version: 1.1
 # Script to get data from the API Garmin Connect Android App for a specific user and date range
 # The script uses the ADB tool to get the token from the device and then uses the token to get the data from the API
 # In case of extracting the activity details, the script will accept a list of IDs
-# Example: python apiExtractor -a activities -s 2022-11-13 -e 2022-11-19
+# Example: python apiExtractor.py -a activities -s 2022-11-13 -e 2022-11-19
 # Example: apiExtractor.py -a activity_details -i 9981299874, 9981299875
 # Works on Windows and Unix
 
@@ -166,6 +166,10 @@ with open('token.txt', 'w') as f:
 
 print(Bcolors.OKGREEN + "[SUCCESS] The bearer token was saved to the file token.txt")
 
+#create garmin.api folder if it doesn't exist
+if not os.path.exists("garmin.api"):
+    os.makedirs("garmin.api")
+
 print(Bcolors.OKBLUE + "[INFO] Getting the data from the Garmin Connect API")
 
 payload = ''
@@ -186,7 +190,8 @@ if api == "heart_rate" or api == "steps" or api == "daily":
             print(Bcolors.OKBLUE + "[INFO] Request to the Garmin Connect API was successful. Saving the data to a file")
             data = res.read()
             # Save the data to a file
-            with open(api + '_' + date + '.json', 'w') as f:
+            filename = "./garmin.api/" + api + "_" + date + ".json"
+            with open(filename, 'w') as f:
                 f.write(data.decode("utf-8"))
                 f.close()
         # Sleep for 1 second to avoid getting blocked by Garmin
@@ -208,7 +213,8 @@ elif api == "activity_details":
             print(Bcolors.OKBLUE + "[INFO] Request to the Garmin Connect API was successful. Saving the data to a file")
             data = res.read()
             # Save the data to a file
-            with open(api + '_' + id + '.json', 'w') as f:
+            filename = "./garmin.api/" + api + '_' + id + '.json'
+            with open(filename, 'w') as f:
                 f.write(data.decode("utf-8"))
                 f.close()
         # Sleep for 1 second to avoid getting blocked by Garmin
@@ -232,7 +238,7 @@ else:
     print(Bcolors.OKBLUE + "[INFO] Request to the Garmin Connect API was successful. Saving the data to a file")
     data = res.read()
     # Save the data to a file
-    file_name = api + "_" + str(start_date) + "-" + str(end_date) + ".json"
+    file_name = "./garmin.api/" + api + "_" + str(start_date) + "-" + str(end_date) + ".json"
     with open(file_name, 'w') as f:
         f.write(data.decode("utf-8"))
         f.close()
