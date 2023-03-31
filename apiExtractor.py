@@ -18,10 +18,12 @@ import time
 from datetime import date, timedelta
 import argparse
 
+
 class Bcolors:
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
     FAIL = '\033[91m'
+    WARNING = '\033[93m'
     ENDC = '\033[0m'
 
 
@@ -30,6 +32,19 @@ def date_range(start_date, end_date):
     while start_date <= end_date:
         yield start_date
         start_date += delta
+
+
+def start_warning():
+    print(Bcolors.WARNING + "[WARNING] This script connects to the Garmin Connect Servers to extract data! \n"
+                            "Before continuing make sure you are only accessing data you have permission to.\n"
+                            "By using this script you are accepting that you are responsible for your own action!")
+    choice = input("Do you wish to continue (Y/N): ")
+    if choice.lower() == "y":
+        print(Bcolors.OKGREEN + "[START] Starting Script")
+    else:
+        print(Bcolors.FAIL + "[END] Closing Script")
+        print(Bcolors.ENDC)
+        sys.exit()
 
 
 endpoints = {
@@ -52,6 +67,7 @@ args = parser.parse_args()
 
 # get api
 api = args.api
+start_warning()
 if api == "activity_details":
     # check if argument is passed
     if args.id is None:
@@ -62,7 +78,7 @@ if api == "activity_details":
     id_act = id_act[0].split(",")
     # check if there is only one id
     if len(id_act) == 1:
-    # check if there is a comma at the end
+        # check if there is a comma at the end
         if id_act[0][-1] == ",":
             id_act[0] = id_act[0][:-1]
         # check if there is a comma at the beginning
@@ -166,7 +182,7 @@ with open('token.txt', 'w') as f:
 
 print(Bcolors.OKGREEN + "[SUCCESS] The bearer token was saved to the file token.txt")
 
-#create garmin.api folder if it doesn't exist
+# create garmin.api folder if it doesn't exist
 if not os.path.exists("garmin.api"):
     os.makedirs("garmin.api")
 
@@ -228,7 +244,7 @@ else:
                      payload, headers)
     else:
         conn.request("GET", endpoints[api] + "?startDate=" + str(start_date) + "&endDate=" + str(end_date),
-                    payload, headers)
+                     payload, headers)
     res = conn.getresponse()
     if res.status != 200:
         print(Bcolors.FAIL + "[ERROR] Error getting the data from the Garmin Connect API")

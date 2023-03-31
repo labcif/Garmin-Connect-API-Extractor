@@ -45,6 +45,9 @@ The script will create a token.txt file with the Bearer token and a file or mult
 
 This method is not 100% reliable and may stop working at any time. Also it is not guaranteed that the token extracted is still valid.
 
+Also make sure you are only accessing data that you have permission (e.g. your own account). This script connects to the Garmin Connect
+Servers, by using this script you are accepting the responsibilities for you own actions such at it is with any open source tool.
+
 ## Authors
 
 Script created by Fabian Nunes for my Master's thesis, under the supervision of Prof. Dr. Miguel Frade and Prof. Dr. Patrício Rodrigues in Polytechnic Institute of Leiria.
