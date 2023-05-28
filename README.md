@@ -1,6 +1,6 @@
-# Garmin-Connect-API-Extractor
+# Garmin-Connect-API-Extractor (GCA-Extractor)
 
-This is a script to extract data from Garmin Connect API related to an user.
+This is a script to extract data from Garmin Connect API related to a user.
 
 ## Requirements
  - ADB (Android Debug Bridge)
@@ -15,7 +15,7 @@ This is a script to extract data from Garmin Connect API related to an user.
 The script uses ADB to extract the Bearer token saved by Garmin Connect in its network log file (app.log).
 Using that token it can access the Garmin Connect API and extract the data.
 
-<img src="https://i.ibb.co/Y8BfCTj/Diagrama-em-branco-2.png" alt="Diagrama-em-branco-2" border="0">
+<img src="https://i.ibb.co/RSqhJGt/Diagrama-em-branco-P-gina-1-1.png" alt="Diagram" border="0">
 
 ## Parameters
     - a, --api: API to extract data from (currently activities, activity_details, sleep, stress, steps and heart_rate)
@@ -26,15 +26,15 @@ Using that token it can access the Garmin Connect API and extract the data.
 ## Usage
 
 ```bash
-python3 apiExtractor.py -a <API> -s <START_DATE> -e <END_DATE>
-python3 apiExtractor.py -a activity_details -i <ACTIVITY_ID>
+python3 gcaExtractor.py -a <API> -s <START_DATE> -e <END_DATE>
+python3 gcaExtractor.py -a activity_details -i <ACTIVITY_ID>
 ```
 
 ## Example
 
 ```bash
-    python apiExtractor -a activities -s 2022-11-13 -e 2022-11-19
-    python apiExtractor -a activity_details -i 123456789, 987654321
+    python3 gcaExtractor.py -a activities -s 2022-11-13 -e 2022-11-19
+    python3 gcaExtractor.py -a activity_details -i 123456789, 987654321
 ```
 
 ## Output
